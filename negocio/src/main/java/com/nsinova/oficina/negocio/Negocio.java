@@ -1,6 +1,7 @@
-package com.nsinova.oficina.modelo;
+package com.nsinova.oficina.negocio;
 
 import com.nsinova.oficina.conexao.Conexao;
+import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IPessoa;
 import java.time.LocalDate;
@@ -9,14 +10,14 @@ import java.util.List;
 
 /**
  *
- * @author gabs
+ * @author treinamento
  */
-public class Modelo {
+public class Negocio {
 
     public static void main(String[] args) {
         try {
             // abre conexao
-            Conexao conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
+            Conexao conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
 
             // cria o dao
             IPessoa daoPessoa = DaoFabrica.criarPessoa(conexao);

@@ -25,7 +25,7 @@ public class PessoaDao implements IPessoa {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ");
         sql.append("id, nome, cpf, email, nascimento ");
-        sql.append("FROM public.pessoa ");
+        sql.append("FROM gabrielgon.pessoa; ");
         return sql;
     }
     
@@ -51,7 +51,7 @@ public class PessoaDao implements IPessoa {
     @Override
     public Pessoa manter(com.nsinova.oficina.modelo.Pessoa pessoa) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO public.pessoa ");
+        sql.append("INSERT INTO gabrielgon.pessoa ");
         sql.append("(nome, cpf, email, nascimento) ");
         sql.append("VALUES (?, ?, ?, ?) ");
         // se o cpf ja existir, atualiza os outros campos

@@ -8,6 +8,7 @@ import java.time.Period;
  * @author gabs
  */
 public class Pessoa {
+    private String id;
     private String nome;
     private String cpf;
     private String email;
@@ -20,6 +21,17 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
+    public Pessoa() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public int getIdade() {
         // calcula periodo entre dataNascimento e data atual, e puxa so os anos do calculo
         return Period.between(dataNascimento, LocalDate.now()).getYears();

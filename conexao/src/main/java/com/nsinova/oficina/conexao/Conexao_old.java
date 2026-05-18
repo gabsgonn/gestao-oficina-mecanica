@@ -8,7 +8,7 @@ import java.sql.SQLException;
  *
  * @author gabs
  */
-public class Conexao {
+public class Conexao_old {
 
     private Connection connection;
     private String provedor;
@@ -20,7 +20,7 @@ public class Conexao {
      * @param senha
      * @throws Exception
      */
-    public Conexao(String provedor,
+    public Conexao_old(String provedor,
             String banco,
             String user,
             String senha) throws Exception {
@@ -33,7 +33,7 @@ public class Conexao {
             String senha) throws Exception {
         Class.forName("org.postgresql.Driver").newInstance();
         connection = DriverManager.getConnection(
-                "jdbc:" + provedor + "://10.250.250.248:5432/" + banco + "?"
+                "jdbc:" + provedor + "://127.0.0.1:5432/" + banco + "?"
                 + "user=" + user + "&password=" + senha);
     }
 
