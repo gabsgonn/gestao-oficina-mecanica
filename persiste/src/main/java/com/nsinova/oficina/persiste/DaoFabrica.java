@@ -15,4 +15,12 @@ public class DaoFabrica {
         return null;
     }
     
+    public static IVeiculo criarVeiculo(Conexao conexao) {
+        if("postgresql".equalsIgnoreCase(conexao.getProvedor())){
+            IPessoa daoPessoa = criarPessoa(conexao);
+            return new com.nsinova.oficina.persiste.postgres.VeiculoDao(conexao.getConnection(), daoPessoa);
+        }
+        return null;
+    }
+    
 }

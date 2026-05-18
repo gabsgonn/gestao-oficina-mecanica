@@ -2,6 +2,7 @@ package com.nsinova.oficina.persiste.postgres;
 
 import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.modelo.Veiculo;
+import com.nsinova.oficina.persiste.IPessoa;
 import com.nsinova.oficina.persiste.IVeiculo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,26 +19,27 @@ public class VeiculoDao implements IVeiculo {
     
     // conexao recebida pelo daofabrica
     private final Connection conexao;
+    private final IPessoa daoPessoa;
     
     // construtor que recebe a conexao aberta
-    public VeiculoDao(Connection conexao) {
+    public VeiculoDao(Connection conexao, IPessoa daoPessoa) {
         this.conexao = conexao;
+        this.daoPessoa = daoPessoa;
     }
     
     //monta o select base sql
     private StringBuilder montarSQL() {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT numero, descricao, data_inicio, data_finalizacao, valor, placa_veiculo");
-        sql.append("FROM gabrielgon.servico;");
+        sql.append("SELECT placa, proprietario ");
+        sql.append("FROM gabrielgon.veiculo ");
         return sql;
     }
     
     // converte uma linha do resultSet em objeto Veiculo modelo
-    private com.nsinova.oficina.modelo.Veiculo montarItem(ResultSet resultado) throws SQLException {
-        Pessoa pessoa = new Pessoa();
-        pessoa.setId(resultado.getString("propretario"));
+    private com.nsinova.oficina.modelo.Veiculo montarItem(ResultSet rs) throws SQLException {
+        com.nsinova.oficina.modelo.Pessoa pessoa = daoPessoa.obterPorId(rs.getString("proprietario"));
         return new com.nsinova.oficina.modelo.Veiculo(
-                resultado.getString("placa"),
+                rs.getString("placa"),
                 pessoa
         );
     }
@@ -53,27 +55,27 @@ public class VeiculoDao implements IVeiculo {
 
     @Override
     public Veiculo manter(Veiculo veiculo) throws SQLException {
+        //get proprietario
+        String proprietario = veiculo.getProprietario().getId();
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO public.veiculo (placa, proprietario)");
-        sql.append("VALUES (?, ?)");
-        sql.append("ON CONFLICT (placa) DO UPDATE SET");
-        sql.append("proprietario = EXCLUDED.proprietario");
-        sql.append("RETURNING *");
+        sql.append("INSERT INTO gabrielgon.veiculo (placa, proprietario) ");
+        sql.append("VALUES (?, ?::uuid) ");
+        // se o cpf ja existir, atualiza os outros campos
+        sql.append("ON CONFLICT (placa) DO UPDATE SET ");
+        sql.append("proprietario = EXCLUDED.proprietario ");
+        // devolve a linha salva para montar o objeto de retorno
+        sql.append("RETURNING * ");
         
         try (PreparedStatement cmd = conexao.prepareStatement(sql.toString())) {
+            // seta cada ? na ordem do VALUES
             cmd.setString(1, veiculo.getPlaca());
-            cmd.setString(2, veiculo.getProprietario().getId());
+            cmd.setString(2, proprietario);
             try (ResultSet rs = cmd.executeQuery()) {
+                // retorna a pessoa salva ou null se nao salvou
                 return rs.next() ? montarItem(rs) : null;
             }
         }
     }
-
-    /**
-     *  SELECT * 
-        FROM veiculos
-        WHERE placa = 'ABC1D23';
-     */
     
     @Override
     public List<com.nsinova.oficina.modelo.Veiculo> obterLista(String placa) throws SQLException {
@@ -89,14 +91,21 @@ public class VeiculoDao implements IVeiculo {
             try (ResultSet rs = cmd.executeQuery()) {
                 return montarLista(rs);
             }
-            
-            
         }
     }
 
     @Override
-    public Veiculo obterPorPlaca(String placa) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public com.nsinova.oficina.modelo.Veiculo obterPorPlaca(String placa) throws SQLException {
+        StringBuilder sql = montarSQL();
+        sql.append("WHERE placa = ? ");
+        try(PreparedStatement cmd = conexao.prepareStatement(sql.toString())) {
+            cmd.setString(1, placa);
+            try (ResultSet rs = cmd.executeQuery()) {
+                // retorna o veiculo encontrado ou null se não existir
+                return rs.next() ? montarItem(rs) : null;
+            }
+        }
+
     }
     
 }

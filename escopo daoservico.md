@@ -1,34 +1,61 @@
-    **Tabela:** `public.veiculo`
-**Campos:** `placa`, `proprietario` (UUID referência para pessoa)
+**Tabela:** `public.servico`
+**Campos:** `numero`, `descricao`, `data_inicio`, `data_finalizacao`, `valor`, `placa_veiculo`
 
 **`montarSQL()`**
+
 ```sql
-SELECT placa, proprietario FROM public.veiculo
+SELECT numero, descricao, data_inicio, data_finalizacao, valor, placa_veiculo
+FROM gabrielgon.servico
 ```
 
 **`montarItem()`**
+
 - recebe `ResultSet`
-- retorna `new Veiculo(placa, pessoa)`
-- o `proprietario` no banco é um UUID — você vai precisar buscar a `Pessoa` pelo id para montar o objeto
+- `data_inicio` e `data_finalizacao` → `rs.getObject("data_inicio", LocalDateTime.class)`
+- `valor` → `rs.getBigDecimal("valor")`
+- `placa_veiculo` → busca o `Veiculo` pelo `daoVeiculo.obterPorPlaca()`
+- retorna `new Servico(numero, descricao, dataInicio, veiculo)`
+- depois seta `dataFinalizacao` e `valor` se não forem nulos
 
 **`manter()`**
+
 ```sql
-INSERT INTO public.veiculo (placa, proprietario)
-VALUES (?, ?)
-ON CONFLICT (placa) DO UPDATE SET
-proprietario = EXCLUDED.proprietario
+INSERT INTO gabrielgon.servico (descricao, data_inicio, data_finalizacao, valor, placa_veiculo)
+VALUES (?, ?, ?, ?, ?)
+ON CONFLICT (numero) DO UPDATE SET
+descricao = EXCLUDED.descricao,
+data_finalizacao = EXCLUDED.data_finalizacao,
+valor = EXCLUDED.valor
 RETURNING *
 ```
 
 **`obterLista()`**
-- filtro por `placa` opcional
-- se `null` traz todos
 
-**`obterPorPlaca()`**
-```sql
-WHERE placa = ?
+- filtro por `placaVeiculo` opcional
+- `WHERE placa_veiculo = ?`
+
+**`obterPorId()`**
+
+- `WHERE numero = ?`
+- `numero` é `long` — usa `cmd.setLong(1, numero)`
+
+**Construtor** vai precisar do `IVeiculo` igual o `VeiculoDao` precisou do `IPessoa`:
+
+```java
+public ServicoDao(Connection conexao, IVeiculo daoVeiculo) {
+    this.conexao = conexao;
+    this.daoVeiculo = daoVeiculo;
+}
 ```
 
-Um detalhe importante: o `montarItem()` do `Veiculo` é um pouco diferente do `Pessoa` — porque o `proprietario` no banco é só um UUID, mas o objeto `Veiculo` espera uma `Pessoa` completa. Você vai precisar do `IPessoa` para buscar essa pessoa pelo id.
+E na `DaoFabrica`:
 
-Tenta implementar e me manda quando terminar.
+```java
+public static IServico criarServico(Conexao conexao) {
+    if ("postgresql".equalsIgnoreCase(conexao.getProvedor())) {
+        IVeiculo daoVeiculo = criarVeiculo(conexao);
+        return new ServicoDao(conexao.getConnection(), daoVeiculo);
+    }
+    return null;
+}
+```

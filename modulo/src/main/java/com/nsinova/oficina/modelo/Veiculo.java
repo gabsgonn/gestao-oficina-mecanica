@@ -13,6 +13,9 @@ public class Veiculo {
         this.proprietario = proprietario;
     }
 
+    public Veiculo() {
+    }
+
     public String getPlaca() {
         return placa;
     }

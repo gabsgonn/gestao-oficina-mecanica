@@ -25,18 +25,20 @@ public class PessoaDao implements IPessoa {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ");
         sql.append("id, nome, cpf, email, nascimento ");
-        sql.append("FROM gabrielgon.pessoa; ");
+        sql.append("FROM gabrielgon.pessoa ");
         return sql;
     }
     
     // converte uma linha do resultSet em objeto Pessoa modelo
     private com.nsinova.oficina.modelo.Pessoa montarItem(ResultSet rs) throws SQLException {
-        return new com.nsinova.oficina.modelo.Pessoa(
+        com.nsinova.oficina.modelo.Pessoa pessoa = new com.nsinova.oficina.modelo.Pessoa(
             rs.getString("nome"),
             rs.getString("cpf"),
             rs.getString("email"),
             rs.getObject("nascimento", LocalDate.class)
         );
+        pessoa.setId(rs.getString("id"));
+        return pessoa;
     }
 
     // percorre o resultSet e monta uma lista de pessoas
