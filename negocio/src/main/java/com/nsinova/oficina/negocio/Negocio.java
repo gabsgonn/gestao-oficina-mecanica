@@ -2,11 +2,14 @@ package com.nsinova.oficina.negocio;
 
 import com.nsinova.oficina.conexao.Conexao;
 import com.nsinova.oficina.modelo.Pessoa;
+import com.nsinova.oficina.modelo.Servico;
 import com.nsinova.oficina.modelo.Veiculo;
 import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IPessoa;
+import com.nsinova.oficina.persiste.IServico;
 import com.nsinova.oficina.persiste.IVeiculo;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -24,30 +27,29 @@ public class Negocio {
             // abre conexao local
             Conexao conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
             
-            // cria o dao
-            IPessoa daoPessoa = DaoFabrica.criarPessoa(conexao);
+            // cria dao servico
+            IServico daoServico = DaoFabrica.criarServico(conexao);
+            IVeiculo daoVeiculo = DaoFabrica.criarVeiculo(conexao);
+
+            // busca o veiculo cadastrado para vincular ao servico
+            Veiculo veiculo = daoVeiculo.obterPorPlaca("ABC1234");
 
             // testa insert
-            // Pessoa pessoa = new Pessoa("Maria", "12345678909", "maria@mail.com", LocalDate.of(2005, Month.JUNE, 10));
-            // daoPessoa.manter(pessoa);
-            // System.out.println("Pessoa inserida!");
+            Servico servico = new Servico(
+                0,
+                "Troca de óleo",
+                LocalDateTime.now(),
+                veiculo
+            );
+            daoServico.manter(servico);
+            System.out.println("Servico inserido!");
 
-            // testa obterLista
-//            List<Pessoa> lista = daoPessoa.obterLista(null);
-//            for (Pessoa p : lista) {
-//                System.out.println(p.getNome() + " - " + p.getCpf());
-//            }
-
-            // cria dao veiculo
-            IVeiculo daoVeiculo = DaoFabrica.criarVeiculo(conexao);
+            // testa obterLista por placa
+            List<Servico> lista = daoServico.obterLista("ABC1234");
+            for (Servico s : lista) {
+                System.out.println(s.getNumero() + " - " + s.getDescricao());
+            }
             
-            // get pessoa para insert
-            Pessoa unicaPessoa = daoPessoa.obterLista("Gabriel").get(0);
-            
-            //teste insert
-            Veiculo veiculo = new Veiculo("ABC1234", unicaPessoa);
-            daoVeiculo.manter(veiculo);
-            System.out.println("Veiculo inserido para: " + unicaPessoa.getNome());
 
             // fecha conexao
             conexao.close();

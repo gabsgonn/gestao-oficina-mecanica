@@ -23,4 +23,11 @@ public class DaoFabrica {
         return null;
     }
     
+    public static IServico criarServico(Conexao conexao) {
+        if("postgresql".equalsIgnoreCase(conexao.getProvedor())){
+            IVeiculo daoVeiculo = criarVeiculo(conexao);
+            return new com.nsinova.oficina.persiste.postgres.ServicoDao(conexao.getConnection(), daoVeiculo);
+        }
+        return null;
+    }
 }

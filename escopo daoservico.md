@@ -1,4 +1,4 @@
-**Tabela:** `public.servico`
+**Tabela:** `gabrielgon.servico`
 **Campos:** `numero`, `descricao`, `data_inicio`, `data_finalizacao`, `valor`, `placa_veiculo`
 
 **`montarSQL()`**
