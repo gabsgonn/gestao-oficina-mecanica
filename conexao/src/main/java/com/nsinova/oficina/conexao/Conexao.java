@@ -28,25 +28,25 @@ public class Conexao {
         inicializar(banco, user, senha);
     }
 
-    /**
-        private void inicializar(String banco,
-                String user,
-                String senha) throws Exception {
-            Class.forName("org.postgresql.Driver").newInstance();
-            connection = DriverManager.getConnection(
-                    "jdbc:" + provedor + "://10.250.250.248:5432/" + banco + "?"
-                    + "user=" + user + "&password=" + senha);
-        }
-     */
     
     private void inicializar(String banco,
             String user,
             String senha) throws Exception {
         Class.forName("org.postgresql.Driver").newInstance();
         connection = DriverManager.getConnection(
-                "jdbc:" + provedor + "://127.0.0.1:5432/" + banco + "?"
+                "jdbc:" + provedor + "://10.250.250.248:5432/" + banco + "?"
                 + "user=" + user + "&password=" + senha);
     }
+    
+        
+//    private void inicializar(String banco,
+//            String user,
+//            String senha) throws Exception {
+//        Class.forName("org.postgresql.Driver").newInstance();
+//        connection = DriverManager.getConnection(
+//                "jdbc:" + provedor + "://127.0.0.1:5432/" + banco + "?"
+//                + "user=" + user + "&password=" + senha);
+//    }
 
     public String getProvedor() {
         return provedor;
