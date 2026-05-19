@@ -32,18 +32,21 @@ public class Negocio {
             
             // cria negocio
             PessoaNegocio pessoaNegocio = new PessoaNegocio(conexao);
+            
+            // cria negocio veiculo
+            VeiculoNegocio veiculoNegocio = new VeiculoNegocio(conexao);
+
+            // busca pessoa para vincular ao veiculo
+            Pessoa proprietario = pessoaNegocio.obterLista("João").get(0);
 
             // testa cadastro
-            Pessoa pessoa = new Pessoa("João", "98765432100", "joao@mail.com", LocalDate.of(1990, Month.MARCH, 15));
-            Pessoa salva = pessoaNegocio.manter(pessoa);
-            System.out.println("Pessoa salva: " + salva.getNome());
+            Veiculo veiculo = new Veiculo("XYZ9K88", proprietario);
+            Veiculo salvo = veiculoNegocio.manter(veiculo);
+            System.out.println("Veiculo salvo: " + salvo.getPlaca() + " - " + salvo.getProprietario().getNome());
 
-            // testa obterLista
-            List<Pessoa> lista = pessoaNegocio.obterLista(null);
-            for (Pessoa p : lista) {
-                System.out.println(p.getNome() + " - " + p.getCpf());
-            }
-            
+            // testa obter
+            Veiculo encontrado = veiculoNegocio.obter("XYZ9K88");
+            System.out.println("Veiculo encontrado: " + encontrado.getPlaca());
             
             // fecha conexao
             conexao.close();

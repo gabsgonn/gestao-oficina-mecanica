@@ -39,7 +39,7 @@ public class PessoaNegocio {
                     pessoa.getCpf()==null || 
                     pessoa.getEmail()==null  ||
                     pessoa.getDataNascimento()==null) {
-                throw new RuntimeException("Usuario ou livro não podem ser nulos!");
+                throw new RuntimeException("Nome, cpf, email ou data de nascimento não podem ser nulos!");
             } return pessoaDao.manter(pessoa);
         }catch (Exception ex) {
             throw new RuntimeException(ex);
