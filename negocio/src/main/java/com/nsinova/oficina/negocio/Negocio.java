@@ -8,6 +8,7 @@ import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IServico;
 import com.nsinova.oficina.persiste.IVeiculo;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -36,17 +37,27 @@ public class Negocio {
             // cria negocio veiculo
             VeiculoNegocio veiculoNegocio = new VeiculoNegocio(conexao);
 
-            // busca pessoa para vincular ao veiculo
-            Pessoa proprietario = pessoaNegocio.obterLista("João").get(0);
+            // cria negocio servico
+            ServicoNegocio servicoNegocio = new ServicoNegocio(conexao);
+
+            // busca veiculo para vincular ao servico
+            Veiculo veiculoServico = veiculoNegocio.obter("XYZ9K88");
 
             // testa cadastro
-            Veiculo veiculo = new Veiculo("XYZ9K88", proprietario);
-            Veiculo salvo = veiculoNegocio.manter(veiculo);
-            System.out.println("Veiculo salvo: " + salvo.getPlaca() + " - " + salvo.getProprietario().getNome());
+            Servico servico = new Servico(
+                0,
+                "Alinhamento e balanceamento",
+                LocalDateTime.now(),
+                veiculoServico
+            );
+            Servico salvo = servicoNegocio.manter(servico);
+            System.out.println("Servico salvo: " + salvo.getNumero() + " - " + salvo.getDescricao());
 
-            // testa obter
-            Veiculo encontrado = veiculoNegocio.obter("XYZ9K88");
-            System.out.println("Veiculo encontrado: " + encontrado.getPlaca());
+            // testa obterLista por placa
+            List<Servico> lista = servicoNegocio.obterLista("XYZ9K88");
+            for (Servico s : lista) {
+                System.out.println(s.getNumero() + " - " + s.getDescricao());
+            }
             
             // fecha conexao
             conexao.close();
