@@ -36,8 +36,7 @@ public class PessoaNegocio {
     private Pessoa manter2(com.nsinova.oficina.modelo.Pessoa pessoa) {
         try {
             if(pessoa.getNome()==null || 
-                    pessoa.getCpf()==null || 
-                    pessoa.getEmail()==null  ||
+                    pessoa.getCpf()==null ||
                     pessoa.getDataNascimento()==null) {
                 throw new RuntimeException("Nome, cpf, email e data de nascimento não podem ser nulos!");
             } return pessoaDao.manter(pessoa);
