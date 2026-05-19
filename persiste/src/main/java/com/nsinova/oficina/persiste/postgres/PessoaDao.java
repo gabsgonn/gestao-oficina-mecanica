@@ -3,6 +3,7 @@ package com.nsinova.oficina.persiste.postgres;
 import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.persiste.IPessoa;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class PessoaDao implements IPessoa {
             cmd.setString(1, pessoa.getNome());
             cmd.setString(2, pessoa.getCpf());
             cmd.setString(3, pessoa.getEmail());
-            cmd.setObject(4, pessoa.getDataNascimento());
+            cmd.setDate(4, Date.valueOf(pessoa.getDataNascimento()));
             try (ResultSet rs = cmd.executeQuery()) {
                 // retorna a pessoa salva ou null se nao salvou
                 return rs.next() ? montarItem(rs) : null;

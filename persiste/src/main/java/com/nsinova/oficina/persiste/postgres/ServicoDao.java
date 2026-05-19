@@ -4,6 +4,7 @@ import com.nsinova.oficina.modelo.Servico;
 import com.nsinova.oficina.persiste.IServico;
 import com.nsinova.oficina.persiste.IVeiculo;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +42,7 @@ public class ServicoDao implements IServico {
         com.nsinova.oficina.modelo.Servico servico = new com.nsinova.oficina.modelo.Servico(
                 rs.getLong("numero"),
                 rs.getString("descricao"), 
-                rs.getObject("data_inicio", OffsetDateTime.class).toLocalDateTime(),
+                rs.getObject("data_inicio", OffsetDateTime.class).toLocalDate(),
                 placa_veiculo
         );
         // se valor não for nulo retorna ele
@@ -51,7 +52,7 @@ public class ServicoDao implements IServico {
         // se data_finalizacao não for nulo retorna ele
         OffsetDateTime dataFin = rs.getObject("data_finalizacao", OffsetDateTime.class);
         if (dataFin != null) {
-            servico.setDataFinalizacao(dataFin.toLocalDateTime());
+            servico.setDataFinalizacao(dataFin.toLocalDate());
         }
         return servico;
     }
@@ -81,10 +82,10 @@ public class ServicoDao implements IServico {
         try (PreparedStatement cmd = conexao.prepareStatement(sql.toString())) {
             //seca cada ? na ordem de VALUES
             cmd.setString(1, servico.getDescricao());
-            cmd.setObject(2, servico.getDataInicio());
-            cmd.setObject(3, servico.getDataFinalizacao());
+            cmd.setDate(2, Date.valueOf(servico.getDataInicio()));
+            cmd.setDate(3, Date.valueOf(servico.getDataFinalizacao()));
             cmd.setBigDecimal(4, servico.getValor());
-            cmd.setObject(5, placa);
+            cmd.setString(5, placa);
             try (ResultSet rs = cmd.executeQuery()) {
                 return rs.next() ? montarItem(rs) : null;
             }

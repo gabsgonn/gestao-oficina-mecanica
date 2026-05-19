@@ -1,6 +1,7 @@
 package com.nsinova.oficina.modelo;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 public class Servico {
     private long numero;
     private String descricao;
-    private LocalDateTime dataInicio;
-    private LocalDateTime dataFinalizacao;
+    private LocalDate dataInicio;
+    private LocalDate dataFinalizacao;
     private BigDecimal valor;
     private Veiculo veiculo;
 
     // construtor sem 'BigDecimal valor ' e sem 'dataFinalizacao pois vao ser definidos quando fechar a ordem de servico - que éresponsabilidade da camada de negocio
-    public Servico(long numero, String descricao, LocalDateTime dataInicio, Veiculo veiculo) {
+    public Servico(long numero, String descricao, LocalDate dataInicio, Veiculo veiculo) {
         this.numero = numero;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
@@ -70,19 +71,19 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(LocalDateTime dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public LocalDateTime getDataFinalizacao() {
+    public LocalDate getDataFinalizacao() {
         return dataFinalizacao;
     }
 
-    public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
+    public void setDataFinalizacao(LocalDate dataFinalizacao) {
         this.dataFinalizacao = dataFinalizacao;
     }
 
