@@ -32,15 +32,14 @@ public class TipoServicoDao implements ITipoServico {
     // monta o select base sql
     private com.nsinova.oficina.modelo.TipoServico montarItem(ResultSet rs) throws SQLException {
         com.nsinova.oficina.modelo.TipoServico tipoServico = new com.nsinova.oficina.modelo.TipoServico(
-                rs.getInt("tempo_estimado_minutos "),
-                rs.getString("codigo "),
-                rs.getString("descricao "),
-                rs.getBigDecimal("valor ")
+                rs.getInt("tempo_estimado_minutos"),
+                rs.getString("codigo"),
+                rs.getString("descricao"),
+                rs.getBigDecimal("valor")
         );
         return tipoServico;
     }
     
-    // percorre o resultSet e monta uma lista de Servicos
     private List<com.nsinova.oficina.modelo.TipoServico> montarLista(ResultSet rs) throws SQLException {
         List<com.nsinova.oficina.modelo.TipoServico> lista = new ArrayList<>();
         

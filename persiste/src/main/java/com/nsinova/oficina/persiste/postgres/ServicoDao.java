@@ -100,7 +100,7 @@ public class ServicoDao implements IServico {
 
         // filtra pela placa se o parametro nao for nulo
         if (placaVeiculo != null && !placaVeiculo.trim().isEmpty()) {
-            sql.append(" WHERE placa_veiculo ILIKE ? ");
+            sql.append("WHERE placa_veiculo ILIKE ? ");
         }
 
         try (PreparedStatement cmd = conexao.prepareStatement(sql.toString())) {

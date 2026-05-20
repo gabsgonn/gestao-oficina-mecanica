@@ -30,4 +30,18 @@ public class DaoFabrica {
         }
         return null;
     }
+
+    public static ITipoServico criarTipoServico(Conexao conexao) {
+        if ("postgresql".equalsIgnoreCase(conexao.getProvedor())) {
+            return new com.nsinova.oficina.persiste.postgres.TipoServicoDao(conexao.getConnection());
+        }
+        return null;
+    }
+
+    public static IPeca criarPeca(Conexao conexao) {
+        if ("postgresql".equalsIgnoreCase(conexao.getProvedor())) {
+            return new com.nsinova.oficina.persiste.postgres.PecaDao(conexao.getConnection());
+        }
+        return null;
+    }
 }
