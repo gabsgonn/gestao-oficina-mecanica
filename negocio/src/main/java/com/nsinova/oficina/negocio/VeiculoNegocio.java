@@ -12,16 +12,14 @@ import java.util.List;
  *
  * @author treinamento
  */
-public class VeiculoNegocio {
+public class VeiculoNegocio extends NegocioBase {
     private IVeiculo veiculoDao;
-    private Conexao conexao;
 
     public VeiculoNegocio(Conexao conexao) {
-        this.conexao = conexao;
-        inicializar();
+        super(conexao);
     }
     
-    private void inicializar() {
+    protected void inicializar() {
         veiculoDao = DaoFabrica.criarVeiculo(conexao);
     }
     

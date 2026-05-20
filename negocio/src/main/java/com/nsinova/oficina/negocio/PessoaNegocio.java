@@ -11,16 +11,14 @@ import java.util.List;
 /**
  * @author treinamento
  */
-public class PessoaNegocio {
+public class PessoaNegocio extends NegocioBase {
     private IPessoa pessoaDao;
-    private Conexao conexao;
     
     public PessoaNegocio(Conexao conexao) {
-        this.conexao = conexao;
-        inicializar();
+        super(conexao);
     }
     
-    private void inicializar() {
+    protected void inicializar() {
         pessoaDao = DaoFabrica.criarPessoa(conexao);
     }
     
@@ -29,7 +27,7 @@ public class PessoaNegocio {
             return Manter.persist(pessoa, (com.nsinova.oficina.modelo.Pessoa pessoa2) -> manter2(pessoa2), 
                     conexao);
         } catch (Exception ex) {
-            throw new Exception("Erro ao manter pessoa!", ex);
+            throw new Exception("Erro ao manter a Pessoa!", ex);
         }
     }
     

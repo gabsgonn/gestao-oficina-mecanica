@@ -12,16 +12,14 @@ import java.util.List;
  *
  * @author treinamento
  */
-public class ServicoNegocio {
+public class ServicoNegocio extends NegocioBase {
     private IServico servicoDao;
-    private Conexao conexao;
     
     public ServicoNegocio(Conexao conexao) {
-        this.conexao = conexao;
-        inicializar();
+        super(conexao);
     }
     
-    private void inicializar() {
+    protected void inicializar() {
         servicoDao = DaoFabrica.criarServico(conexao);
     }
     
@@ -31,7 +29,7 @@ public class ServicoNegocio {
                     (com.nsinova.oficina.modelo.Servico servico2) -> manter2(servico2), 
                     conexao);
         } catch (Exception ex) {
-            throw new Exception("Erro ao manter servico!", ex);
+            throw new Exception("Erro ao manter o Servico!", ex);
         }
     }
     

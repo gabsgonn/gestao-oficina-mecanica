@@ -47,7 +47,7 @@ public class Negocio {
             Servico servico = new Servico(
                 0,
                 "Alinhamento e balanceamento",
-                LocalDateTime.now(),
+                LocalDate.now(),
                 veiculoServico
             );
             Servico salvo = servicoNegocio.manter(servico);
