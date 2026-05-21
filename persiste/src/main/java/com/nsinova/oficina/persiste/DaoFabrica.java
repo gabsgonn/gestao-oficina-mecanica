@@ -1,6 +1,7 @@
 package com.nsinova.oficina.persiste;
 
 import com.nsinova.oficina.conexao.Conexao;
+import com.nsinova.oficina.persiste.postgres.ServicoItemDao;
 
 /**
  *
@@ -41,6 +42,16 @@ public class DaoFabrica {
     public static IPeca criarPeca(Conexao conexao) {
         if ("postgresql".equalsIgnoreCase(conexao.getProvedor())) {
             return new com.nsinova.oficina.persiste.postgres.PecaDao(conexao.getConnection());
+        }
+        return null;
+    }
+ 
+    public static IServicoItem criarServicoItem(Conexao conexao) {
+        if ("postgresql".equalsIgnoreCase(conexao.getProvedor())) {
+            IServico daoServico = criarServico(conexao);
+            IPeca daoPeca = criarPeca(conexao);
+            ITipoServico daoTipoServico = criarTipoServico(conexao);
+            return new ServicoItemDao(conexao.getConnection(), daoServico, daoPeca, daoTipoServico);
         }
         return null;
     }

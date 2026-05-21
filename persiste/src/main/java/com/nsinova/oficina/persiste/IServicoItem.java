@@ -11,5 +11,5 @@ import java.util.List;
 public interface IServicoItem {
     public ServicoItem manter(ServicoItem servico) throws SQLException;
     
-    public List<ServicoItem> obterLista(String placaVeiculo) throws SQLException;
+    public List<ServicoItem> obterLista(long numeroServico) throws SQLException;
 }

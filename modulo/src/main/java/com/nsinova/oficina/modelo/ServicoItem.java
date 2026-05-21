@@ -20,6 +20,14 @@ public class ServicoItem {
         this.quantidade = quantidade;
         this.descricao = descricao;
     }
+
+    public ItemCatalogo getItem() {
+        return item;
+    }
+
+    public void setItem(ItemCatalogo item) {
+        this.item = item;
+    }
     
     public BigDecimal calcularSubtotal() {
         return item.getValor().multiply(this.quantidade);
