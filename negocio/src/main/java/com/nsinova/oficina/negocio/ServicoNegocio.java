@@ -2,10 +2,13 @@ package com.nsinova.oficina.negocio;
 
 import com.nsinova.oficina.conexao.Conexao;
 import com.nsinova.oficina.modelo.Servico;
+import com.nsinova.oficina.modelo.ServicoItem;
 import com.nsinova.oficina.negocio.util.Manter;
 import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IServico;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,13 +17,22 @@ import java.util.List;
  */
 public class ServicoNegocio extends NegocioBase {
     private IServico servicoDao;
-    
+    private ServicoItemNegocio servicoItemNegocio;
+
     public ServicoNegocio(Conexao conexao) {
         super(conexao);
     }
     
+    @Override
     protected void inicializar() {
         servicoDao = DaoFabrica.criarServico(conexao);
+        servicoItemNegocio = new ServicoItemNegocio(conexao);
+    }
+    
+    public ServicoItem adicionarItem(Servico servico, ServicoItem item) throws Exception {
+        ServicoItem salvo = servicoItemNegocio.adicionarItem(item);
+        servico.adicionarItem(salvo);
+        return salvo;
     }
     
     public Servico manter(com.nsinova.oficina.modelo.Servico servico) throws Exception {
@@ -43,6 +55,18 @@ public class ServicoNegocio extends NegocioBase {
         }catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    public Servico finalizar(Servico servico) throws Exception {
+        if (servico.getDataFinalizacao() != null) {
+            throw new Exception("Serviço já finalizado!");
+        }
+        if (servico.getItens().isEmpty()) {
+            throw new Exception("Serviço não possui itens!");
+        }
+        servico.setDataFinalizacao(LocalDate.now());
+        servico.setValor(servico.calcularTotal());
+        return manter(servico);
     }
     
     public com.nsinova.oficina.modelo.Servico obter(String placaVeiculo) throws SQLException{
