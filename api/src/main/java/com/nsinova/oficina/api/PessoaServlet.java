@@ -37,7 +37,7 @@ public class PessoaServlet extends HttpServlet {
             conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
             PessoaNegocio negocio = new PessoaNegocio(conexao);
 
-            String nome = request.getParameter("Gabriel");
+            String nome = request.getParameter("nome");
             List<Pessoa> lista = negocio.obterLista(nome);
             
 
