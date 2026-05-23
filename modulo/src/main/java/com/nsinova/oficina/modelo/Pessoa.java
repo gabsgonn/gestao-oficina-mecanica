@@ -13,6 +13,7 @@ public class Pessoa {
     private String cpf;
     private String email;
     private LocalDate dataNascimento;
+    private int idade;
     
     public Pessoa(String nome, String cpf, String email, LocalDate dataNascimento) {
         this.nome = nome;
@@ -28,11 +29,6 @@ public class Pessoa {
     public void setId(String id) {
         this.id = id;
     }
-    
-    public int getIdade() {
-        // calcula periodo entre dataNascimento e data atual, e puxa so os anos do calculo
-        return Period.between(dataNascimento, LocalDate.now()).getYears();
-    };
 
     public String getNome() {
         return nome;
@@ -57,6 +53,15 @@ public class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public int getIdade() {
+        // calcula periodo entre dataNascimento e data atual, e puxa so os anos do calculo
+        return Period.between(dataNascimento, LocalDate.now()).getYears();
+    };
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
@@ -64,7 +69,6 @@ public class Pessoa {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+        this.idade = getIdade();
     }
-    
-    
 }

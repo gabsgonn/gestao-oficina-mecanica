@@ -38,6 +38,7 @@ public class PessoaDao implements IPessoa {
             rs.getString("email"),
             rs.getObject("nascimento", LocalDate.class)
         );
+        pessoa.setIdade(pessoa.getIdade());
         pessoa.setId(rs.getString("id"));
         return pessoa;
     }
