@@ -1,5 +1,6 @@
 package com.nsinova.oficina.controle;
 
+import com.nsinova.oficina.api.ConexaoApi;
 import com.nsinova.oficina.conexao.Conexao;
 import com.nsinova.oficina.negocio.ServicoNegocio;
 import com.nsinova.oficina.modelo.Servico;
@@ -17,7 +18,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("/servicos")
 public class ServicoController {
-    private Conexao conexao = null;
+    private ConexaoApi api = new ConexaoApi();
+
     
     @GET
     @Path("")
@@ -26,8 +28,8 @@ public class ServicoController {
         @QueryParam("servico") String servico
     ) throws Exception {
         try {
-            conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
-        
+            Conexao conexao = api.conexaoApi();
+            
             ServicoNegocio servicoNegocio = new ServicoNegocio(conexao);
             
             List<Servico> listaServicos = servicoNegocio.obterLista(servico);
@@ -39,14 +41,14 @@ public class ServicoController {
     }
     
     @GET
-    @Path("/nome-e-placa")
+    @Path("/numero-veiculo")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlacaProprietario(
         @QueryParam("servico") String servico
     ) throws Exception {
         try {
-            conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
-        
+            Conexao conexao = api.conexaoApi();
+            
             ServicoNegocio servicoNegocio = new ServicoNegocio(conexao);
             
             List<Servico> listaServicos = servicoNegocio.obterNumeroEVeiculo();

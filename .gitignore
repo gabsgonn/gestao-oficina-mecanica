@@ -4,3 +4,4 @@
 /negocio/target/
 /api/target/
 /oficina/target/
+/oficina/src/main/resources/.env
