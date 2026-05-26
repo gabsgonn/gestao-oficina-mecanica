@@ -110,4 +110,36 @@ public class PessoaDao implements IPessoa {
             }
         }
     }
+
+    
+    private List<Pessoa> montarListaSomenteNome(ResultSet rs) throws SQLException {
+        List<Pessoa> lista = new ArrayList<>();
+        while (rs.next()) {
+            Pessoa p = new Pessoa(rs.getString("nome"), null, null, null);
+            lista.add(p);
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Pessoa> obterListaSomenteNome(String nomeCliente) throws SQLException {
+        
+        StringBuilder sql = new StringBuilder();
+        // Script que só chama a coluna nome
+        sql.append("SELECT nome ");
+        sql.append("FROM gabrielgon.pessoa ");
+        
+        if (nomeCliente != null) {
+            sql.append("WHERE nome ILIKE ? ");
+        }
+        
+        try (PreparedStatement cmd = conexao.prepareStatement(sql.toString())) {
+            if (nomeCliente != null) {
+                cmd.setString(1, "%" + nomeCliente + "%");
+            }
+            try (ResultSet rs = cmd.executeQuery()) {
+                return montarListaSomenteNome(rs);
+            }
+        }
+    }
 }

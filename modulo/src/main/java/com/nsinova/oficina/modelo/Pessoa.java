@@ -56,6 +56,7 @@ public class Pessoa {
     
     public int getIdade() {
         // calcula periodo entre dataNascimento e data atual, e puxa so os anos do calculo
+        if (dataNascimento == null) return 0;
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     };
 

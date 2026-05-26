@@ -6,6 +6,7 @@ import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IPessoa;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,5 +50,9 @@ public class PessoaNegocio extends NegocioBase {
     
     public List<com.nsinova.oficina.modelo.Pessoa> obterLista(String nomeCliente) throws SQLException {
         return pessoaDao.obterLista(nomeCliente);
+    }
+    
+    public List<Pessoa> obterListaSomenteNome(String nomeCliente) throws SQLException {
+        return pessoaDao.obterListaSomenteNome(nomeCliente);
     }
 }

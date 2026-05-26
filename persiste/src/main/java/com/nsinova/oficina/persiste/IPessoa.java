@@ -15,4 +15,6 @@ public interface IPessoa {
     public List<Pessoa> obterLista(String nome) throws SQLException;
     
     public Pessoa obterPorId(String id) throws SQLException;
+
+    public List<Pessoa> obterListaSomenteNome(String nomeCliente) throws SQLException;
 }
