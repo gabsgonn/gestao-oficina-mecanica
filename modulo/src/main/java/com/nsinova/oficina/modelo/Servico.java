@@ -2,7 +2,6 @@ package com.nsinova.oficina.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,9 @@ public class Servico {
         this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.veiculo = veiculo;
+    }
+
+    public Servico() {
     }
     
     // criando lista de itens
@@ -102,6 +104,4 @@ public class Servico {
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
-    
-     
 }

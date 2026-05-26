@@ -111,6 +111,7 @@ public class PessoaDao implements IPessoa {
         }
     }
 
+    // ========== LISTAR SOMENTE NOME ===========
     
     private List<Pessoa> montarListaSomenteNome(ResultSet rs) throws SQLException {
         List<Pessoa> lista = new ArrayList<>();

@@ -14,4 +14,6 @@ public interface IServico {
     public List<Servico> obterLista(String placaVeiculo) throws SQLException;
     
     public Servico obterPorId(long numero) throws SQLException;
+    
+    public List<Servico> obterNumeroEVeiculo() throws SQLException;
 }

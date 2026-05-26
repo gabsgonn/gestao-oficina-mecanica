@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import java.util.List;
-import java.io.IOException;
 
 import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.negocio.PessoaNegocio;
@@ -28,55 +27,37 @@ public class PessoaController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response inicio(
         @QueryParam("nome") String nomeCliente
-    ) throws IOException {
-        
+    ) throws Exception {
         try {
-            // conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
-            conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
+            conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
+            //conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
             PessoaNegocio pessoaNegocio = new PessoaNegocio(conexao);
 
-            List<Pessoa> listaPessoas = pessoaNegocio.obterLista(nomeCliente); 
-
+            List<Pessoa> listaPessoas = pessoaNegocio.obterLista(nomeCliente);
 
             return Response.ok(listaPessoas).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro: " + e.getMessage()).build();
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (Exception e) {}
-            }
-        }
+            throw new Exception("erro" + e);
+        } 
     }
+    
 
     @GET
     @Path("/nome")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarNomes(
             @QueryParam("nome") String nomeCliente
-    ) throws IOException {
-        
+    ) throws Exception {
         try {
-            // conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
-            conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
+            conexao = new Conexao("postgresql", "curso", "postgres", "pgsql$nsinova");
+            // conexao = new Conexao("postgresql", "oficina", "postgres", "postgresql026");
             PessoaNegocio pessoaNegocio = new PessoaNegocio(conexao);
 
             List<Pessoa> listaNomePessoas = pessoaNegocio.obterListaSomenteNome(nomeCliente);
 
             return Response.ok(listaNomePessoas).build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro: " + e.getMessage()).build();
-        } finally {
-            if (conexao != null) {
-                try {
-                    conexao.close();
-                } catch (Exception e) {
-                }
-            }
+            throw new Exception("erro" + e);
         }
     }
 }

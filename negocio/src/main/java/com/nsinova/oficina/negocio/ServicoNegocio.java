@@ -8,7 +8,6 @@ import com.nsinova.oficina.persiste.DaoFabrica;
 import com.nsinova.oficina.persiste.IServico;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -75,5 +74,9 @@ public class ServicoNegocio extends NegocioBase {
     
     public List<com.nsinova.oficina.modelo.Servico> obterLista(String placaVeiculo) throws SQLException {
         return servicoDao.obterLista(placaVeiculo);
+    }
+    
+    public List<com.nsinova.oficina.modelo.Servico> obterNumeroEVeiculo() throws SQLException {
+        return servicoDao.obterNumeroEVeiculo();
     }
 }

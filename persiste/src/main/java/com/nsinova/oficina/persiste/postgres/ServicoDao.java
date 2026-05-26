@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -95,7 +96,6 @@ public class ServicoDao implements IServico {
     // percorre o resultSet e monta uma lista de Servicos
     @Override
     public List<Servico> obterLista(String placaVeiculo) throws SQLException {
-        List<Servico> lista = new ArrayList<>();
         StringBuilder sql = montarSQL();
 
         // filtra pela placa se o parametro nao for nulo
@@ -123,5 +123,24 @@ public class ServicoDao implements IServico {
                 return rs.next() ? montarItem(rs) : null;
             }
         }
+    }
+
+    // ========== LISTAR SOMENTE numero e veiculo ===========
+    @Override
+    public List<Servico> obterNumeroEVeiculo() throws SQLException {
+        List<Servico> lista = new ArrayList<>();
+        String sql = "SELECT numero, placa_veiculo FROM gabrielgon.servico ";
+
+        try (PreparedStatement cmd = conexao.prepareStatement(sql);
+             ResultSet rs = cmd.executeQuery()) {
+            
+            while (rs.next()) {
+                com.nsinova.oficina.modelo.Veiculo veiculo = daoVeiculo.obterPorPlaca(rs.getString("placa_veiculo"));
+                
+                Servico servico = new Servico(rs.getLong("numero"), "", null, veiculo);
+                lista.add(servico);
+            }
+        }
+        return lista;
     }
 }
