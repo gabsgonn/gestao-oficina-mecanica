@@ -1,6 +1,5 @@
 package com.nsinova.oficina.persiste.postgres;
 
-import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.modelo.Veiculo;
 import com.nsinova.oficina.persiste.IPessoa;
 import com.nsinova.oficina.persiste.IVeiculo;
@@ -108,4 +107,9 @@ public class VeiculoDao implements IVeiculo {
 
     }
     
+    // ========== Listar placa e proprietario somente com nome ============
+    
+//    public List<com.nsinova.oficina.modelo.Veiculo> obterLista(String placa) throws SQLException {
+        
+//    }
 }
