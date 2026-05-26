@@ -13,6 +13,7 @@ import java.util.List;
 import com.nsinova.oficina.modelo.Pessoa;
 import com.nsinova.oficina.negocio.PessoaNegocio;
 import com.nsinova.oficina.conexao.Conexao;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 
 
@@ -39,7 +40,7 @@ public class PessoaController {
 
             return Response.ok(listaPessoas).build();
         } catch (Exception e) {
-            throw new Exception("erro" + e);
+            throw new Exception("Erro:" + e);
         } 
     }
     
@@ -59,7 +60,30 @@ public class PessoaController {
 
             return Response.ok(listaNomePessoas).build();
         } catch (Exception e) {
-            throw new Exception("erro" + e);
+            throw new Exception("Erro:" + e);
         }
     }
+    
+    
+    @POST
+    @Path("")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cadastrarPessoa(Pessoa pessoa) throws Exception {
+        try {
+            
+            Conexao conexao = api.conexaoApi();
+            
+            PessoaNegocio pessoaNegocio = new PessoaNegocio(conexao);
+            
+            Pessoa salva = pessoaNegocio.manter(pessoa);
+            
+            return Response.status(201).entity(salva).build();
+            
+        } catch (Exception e) {
+            throw new Exception("Erro:" + e);
+        }
+    }
+
+    // REF POST: https://www.guj.com.br/t/resolvido-post-json-para-um-webserver/326090/
 }
