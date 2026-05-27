@@ -84,8 +84,22 @@ public class ServicoDao implements IServico {
             //seca cada ? na ordem de VALUES
             cmd.setString(1, servico.getDescricao());
             cmd.setDate(2, Date.valueOf(servico.getDataInicio()));
-            cmd.setDate(3, Date.valueOf(servico.getDataFinalizacao()));
-            cmd.setBigDecimal(4, servico.getValor());
+
+//            cmd.setDate(3, Date.valueOf(servico.getDataFinalizacao()));
+//            cmd.setBigDecimal(4, servico.getValor());
+
+            if (servico.getDataFinalizacao() != null) {
+                cmd.setDate(3, Date.valueOf(servico.getDataFinalizacao()));
+            } else {
+                cmd.setNull(3, java.sql.Types.DATE);
+            }
+
+            if (servico.getValor() != null) {
+                cmd.setBigDecimal(4, servico.getValor());
+            } else {
+                cmd.setNull(4, java.sql.Types.NUMERIC);
+            }
+
             cmd.setString(5, placa);
             try (ResultSet rs = cmd.executeQuery()) {
                 return rs.next() ? montarItem(rs) : null;

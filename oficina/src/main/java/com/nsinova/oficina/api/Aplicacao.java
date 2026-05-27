@@ -14,6 +14,7 @@ public class Aplicacao extends ResourceConfig {
 
     public Aplicacao() {
         packages("com.nsinova.oficina.controle");
+        packages("com.nsinova.oficina.api");
 //        packages("br.com.nsinova.oficina.controle");
 
         register(JacksonFeature.class);
