@@ -10,7 +10,9 @@ import javax.ws.rs.Consumes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -53,14 +55,37 @@ public class ServicoController {
             
             Conexao conexao = api.conexaoApi();
             
-            ServicoNegocio pessoaNegocio = new ServicoNegocio(conexao);
+            ServicoNegocio servicoNegocio = new ServicoNegocio(conexao);
             
-            Servico salva = pessoaNegocio.manter(servico);
+            Servico salva = servicoNegocio.manter(servico);
             
             return Response.status(201).entity(salva).build();
             
         } catch (Exception e) {
             throw new Exception("Erro:" + e);
+        }
+    }
+    
+    @PUT
+    @Path("{numero}/finalizar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response finalizarServico(@PathParam("numero") long numero) throws Exception {
+        try {
+            Conexao conexao = api.conexaoApi();
+            ServicoNegocio servicoNegocio = new ServicoNegocio(conexao);
+
+            Servico servico = servicoNegocio.obterPorId(numero);
+
+            if (servico == null) {
+                return Response.status(404).entity("Serviço " + numero + " não encontrado").build();
+            }
+
+            Servico salva = servicoNegocio.finalizar(servico);
+
+            return Response.ok(salva).build();
+
+        } catch (Exception e) {
+            throw new Exception("Erro:" + e.getMessage(), e);
         }
     }
     

@@ -60,7 +60,7 @@ public class ServicoNegocio extends NegocioBase {
         if (servico.getDataFinalizacao() != null) {
             throw new Exception("Serviço já finalizado!");
         }
-        if (servico.getItens().isEmpty()) {
+        if (servico.getItens() == null || servico.getItens().isEmpty()) {
             throw new Exception("Serviço não possui itens!");
         }
         servico.setDataFinalizacao(LocalDate.now());
@@ -74,6 +74,17 @@ public class ServicoNegocio extends NegocioBase {
     
     public List<com.nsinova.oficina.modelo.Servico> obterLista(String placaVeiculo) throws SQLException {
         return servicoDao.obterLista(placaVeiculo);
+    }
+    
+    public Servico obterPorId(long numero) throws SQLException {
+        Servico servico = servicoDao.obterPorId(numero);
+        if (servico != null) {
+            List<ServicoItem> itens = servicoItemNegocio.obterLista(numero);
+            for (ServicoItem item : itens) {
+                servico.adicionarItem(item);
+            }
+        }
+        return servico;
     }
     
     public List<com.nsinova.oficina.modelo.Servico> obterNumeroEVeiculo() throws SQLException {

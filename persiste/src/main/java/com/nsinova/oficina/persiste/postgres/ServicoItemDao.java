@@ -42,8 +42,7 @@ public class ServicoItemDao implements IServicoItem {
     
     private com.nsinova.oficina.modelo.ServicoItem montarItem(ResultSet rs) throws SQLException {
         com.nsinova.oficina.modelo.Servico servico = daoServico.obterPorId(rs.getLong("servico"));
-        
-        // tratamento do Enum TipoItem
+
         String tipo = rs.getString("tipo");
         String codigo = rs.getString("codigo");
 
@@ -57,16 +56,16 @@ public class ServicoItemDao implements IServicoItem {
             item = daoTipoServico.obterPorCodigo(codigo);
             tipoItem = TipoItem.SERVICO;
         }
-        // final tratamento TipoItem
-        
-        com.nsinova.oficina.modelo.ServicoItem servicoItem = new com.nsinova.oficina.modelo.ServicoItem(
-                servico,
-                tipoItem,
-                item,
+
+        if (item == null) {
+            throw new SQLException("Item com código '" + codigo + "' e tipo '" + tipo + "' não encontrado no catálogo.");
+        }
+
+        return new com.nsinova.oficina.modelo.ServicoItem(
+                servico, tipoItem, item,
                 rs.getBigDecimal("quantidade"),
                 rs.getString("descricao")
         );
-        return servicoItem;
     }
 
     private List<com.nsinova.oficina.modelo.ServicoItem> montarLista(ResultSet rs) throws SQLException {

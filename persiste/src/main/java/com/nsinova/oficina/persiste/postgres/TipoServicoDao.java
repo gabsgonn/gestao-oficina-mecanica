@@ -24,7 +24,7 @@ public class TipoServicoDao implements ITipoServico {
     // monta o select base sql
     private StringBuilder montarSQL() {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT codigo, descricao, valor, tempo_estimado ");
+        sql.append("SELECT codigo, descricao, valor, tempo_estimado_minutos ");
         sql.append("FROM gabrielgon.tipo_servico ");
         return sql;
     }
@@ -79,10 +79,10 @@ public class TipoServicoDao implements ITipoServico {
         }
     }
     
-//                rs.getInt(tipoServico.getTempoEstimado()),
-//                rs.getString(tipoServico.getDescricao()),
-//                rs.getBigDecimal(tipoServico.getValor()),
-//                rs.get()
+//    rs.getInt(tipoServico.getTempoEstimado()),
+//    rs.getString(tipoServico.getDescricao()),
+//    rs.getBigDecimal(tipoServico.getValor()),
+//    rs.get()
     
     @Override
     public List<TipoServico> obterLista(String descricao) throws SQLException {

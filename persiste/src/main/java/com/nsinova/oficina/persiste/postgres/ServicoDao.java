@@ -67,9 +67,37 @@ public class ServicoDao implements IServico {
         return lista;
     }
 
-    //converte uma linha do resultSet em objeto Servico modelo
     @Override
     public Servico manter(Servico servico) throws SQLException {
+        if (servico.getNumero() > 0) {
+            return atualizar(servico);
+        }
+        return inserir(servico);
+    }
+
+    private Servico atualizar(Servico servico) throws SQLException {
+        String sql = "UPDATE gabrielgon.servico SET descricao=?, data_finalizacao=?, valor=? " +
+                     "WHERE numero=? RETURNING *";
+        try (PreparedStatement cmd = conexao.prepareStatement(sql)) {
+            cmd.setString(1, servico.getDescricao());
+            if (servico.getDataFinalizacao() != null) {
+                cmd.setDate(2, Date.valueOf(servico.getDataFinalizacao()));
+            } else {
+                cmd.setNull(2, java.sql.Types.DATE);
+            }
+            if (servico.getValor() != null) {
+                cmd.setBigDecimal(3, servico.getValor());
+            } else {
+                cmd.setNull(3, java.sql.Types.NUMERIC);
+            }
+            cmd.setLong(4, servico.getNumero());
+            try (ResultSet rs = cmd.executeQuery()) {
+                return rs.next() ? montarItem(rs) : null;
+            }
+        }
+    }
+    
+    private Servico inserir(Servico servico) throws SQLException {
         String placa = servico.getVeiculo().getPlaca();
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO gabrielgon.servico (descricao, data_inicio, data_finalizacao, valor, placa_veiculo) ");

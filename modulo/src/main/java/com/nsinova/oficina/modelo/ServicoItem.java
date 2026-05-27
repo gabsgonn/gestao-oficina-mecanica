@@ -30,6 +30,9 @@ public class ServicoItem {
     }
     
     public BigDecimal calcularSubtotal() {
+        if (item == null || item.getValor() == null || this.quantidade == null) {
+            throw new IllegalStateException("Item, valor ou quantidade não podem ser nulos para calcular subtotal.");
+        }
         return item.getValor().multiply(this.quantidade);
     }
 
