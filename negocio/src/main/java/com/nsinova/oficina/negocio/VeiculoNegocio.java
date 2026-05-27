@@ -36,7 +36,7 @@ public class VeiculoNegocio extends NegocioBase {
     private Veiculo manter2(com.nsinova.oficina.modelo.Veiculo veiculo) {
         try {
             if (veiculo.getPlaca()==null || veiculo.getProprietario()==null) {
-                throw new RuntimeException("Placa ou veiculo não podem ser nulos!");
+                throw new RuntimeException("Placa ou veiculo não podem ser nulos");
             } return veiculoDao.manter(veiculo);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
