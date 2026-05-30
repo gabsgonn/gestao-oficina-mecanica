@@ -1,7 +1,7 @@
-/persiste/target/
-/conexao/target/
-/modulo/target/
-/negocio/target/
-/api/target/
-/oficina/target/
-/oficina/src/main/resources/.env
+backend/persiste/target/
+backend/conexao/target/
+backend/modulo/target/
+backend/negocio/target/
+backend/api/target/
+backend/oficina/target/
+backend/oficina/src/main/resources/.env
