@@ -1,0 +1,75 @@
+/* O texto do Label */
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+/* O pulo do gato: mirar apenas nos inputs de texto, removendo radio/checkbox dessa regra */
+input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    color: #1e293b;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    /* Impede que o padding quebre o layout */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Placeholder sutil */
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* O efeito moderno ao clicar no campo (Focus Ring) */
+input:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.25);
+}
+
+/* Regra específica para o textarea não quebrar o  se o usuário redimensionar */
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* O botão de Submit do ulário */
+button {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px;
+    background-color: #1e293b;
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #334155;
+}

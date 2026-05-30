@@ -1,0 +1,7 @@
+@if(form){
+<form [formGroup]="form">
+    @for (item of fields; track $index) {
+    <nx-input [form]="form" [field]="item"></nx-input>
+    }
+</form>
+}

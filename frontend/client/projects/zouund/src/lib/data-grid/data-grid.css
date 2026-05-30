@@ -1,0 +1,55 @@
+:host {
+    display: flex;
+    overflow: auto;
+    flex: auto;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+table {
+    border-collapse: collapse;
+    font-family: system-ui, sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border-style: hidden;
+}
+
+table>thead {
+    position: sticky;
+    top: 0;
+}
+
+table>thead>tr>th,
+table>thead>tr>td {
+    background-color: #f8fafc;
+    color: #64748b;
+    text-align: left;
+    padding: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+table>tbody>tr>td {
+    padding: 16px;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+table>tbody>tr:last-child>td {
+    border-bottom: none;
+}
+
+table>tbody>tr:hover>td {
+    background-color: #f1f5f9;
+}
+
+table>tfoot>tr>td {
+    background-color: #f8fafc;
+    font-weight: bold;
+    padding: 16px;
+    border-top: 2px solid #e2e8f0;
+}

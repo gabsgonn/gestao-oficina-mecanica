@@ -1,0 +1,10 @@
+<header>
+  <nav>
+    @for (modelo of Modelos; track $index) {
+    <a [routerLink]="'/' + modelo.toLowerCase()">{{modelo}}</a>
+    }
+  </nav>
+</header>
+<div class="col">
+  <router-outlet />
+</div>

@@ -1,0 +1,11 @@
+@if(form){<ng-container [formGroup]="form">
+    @if(field && field.visivel!==false){
+<<<<<<< HEAD
+    <label [for]="field.field">{{field.title || field.field}}</label>
+=======
+    <label [for]="field.field">{{field.field}}</label>
+>>>>>>> ae66475a3e15bf138f7414c8b11e7496a98b6c0f
+    <input [name]="field.field" [type]="field.tipo || 'text'" [placeholder]="field.title"
+        [formControlName]="field.field||''">
+    }
+</ng-container>}

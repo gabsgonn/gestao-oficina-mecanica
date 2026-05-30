@@ -1,0 +1,82 @@
+/* O contêiner principal da barra superior */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Joga a navegação para a esquerda e o botão para a direita */
+    padding: 12px 24px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    /* Sombra suave para destacar do conteúdo */
+    font-family: system-ui, -apple-system, sans-serif;
+    position: sticky;
+    /* Faz a barra grudar no topo se a página rolar */
+    top: 0;
+    z-index: 100;
+}
+
+/* O agrupamento dos links */
+header>nav {
+    display: flex;
+    gap: 24px;
+    /* Espaço uniforme entre os links */
+    align-items: center;
+}
+
+/* Os links de navegação ("Pessoa", "Peça") */
+header>nav>a {
+    text-decoration: none;
+    color: #64748b;
+    /* Cinza médio/ardósia */
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 8px 0;
+}
+
+/* Efeito de hover moderno nos links */
+header>nav>a:hover {
+    color: #0f172a;
+    /* Fica quase preto ao passar o mouse */
+}
+
+/* O botão de ação primária ("Adicionar Novo") */
+:host ::ng-deep button {
+    background-color: #2563eb;
+    /* Azul moderno para chamar atenção (CTA) */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s;
+}
+
+:host ::ng-deep button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Um pequeno feedback tátil ao clicar no botão */
+:host ::ng-deep button:active {
+    transform: scale(0.97);
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    flex: auto;
+}
+
+.col {
+    display: flex;
+    flex: auto;
+    overflow: hidden;
+}

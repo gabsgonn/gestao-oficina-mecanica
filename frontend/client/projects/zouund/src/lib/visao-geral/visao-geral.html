@@ -1,0 +1,19 @@
+<div class="row">
+<<<<<<< HEAD
+    <button (click)="pesquisar()">Pesquisar</button>
+=======
+>>>>>>> ae66475a3e15bf138f7414c8b11e7496a98b6c0f
+    <button (click)="novo()">Adicionar Novo</button>
+    <span style="flex: auto;"></span>
+    @if(itemSelecionado){
+    <button (click)="confirmar.emit(itemSelecionado);itemSelecionado = undefined">Confirmar</button>
+    }
+</div>
+<div class="row">
+    <nx-data-grid (select)="itemSelecionado = $event" [colunas]="cols" [origem]="lista">
+    </nx-data-grid>
+    @if(itemSelecionado){
+    <nx-editor [fields]="fields" [source]="itemSelecionado">
+    </nx-editor>
+    }
+</div>

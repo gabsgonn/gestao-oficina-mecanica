@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            @for (coluna of colunas; track $index) {
+            <th>{{coluna.headerName}}</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of origem; track $index) {
+        <tr (click)="select.emit(item)">
+            @for (coluna of colunas; track $index) {
+            <td>{{item[coluna.field] || 'vazio'}}</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
